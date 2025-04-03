@@ -4,8 +4,6 @@ package IPv4Checker
 fun isValidIPv4(ipv:String):Boolean{
     // conditions for correct IPv4
     if(ipv.isEmpty())return false
-
-
     // 1- Having 3 dots, 4 digits
     val segments = ipv.split('.')
     if(segments.size !=4) return false
@@ -14,7 +12,6 @@ fun isValidIPv4(ipv:String):Boolean{
         if (!segment.all { it.isDigit() }) return false
         // Check if segment start with 0
         if (segment.length > 1 && segment.startsWith("0")) return false
-
         // Check numeric value
         val num = segment.toInt()
         if (num !in 0..255) return false
@@ -24,26 +21,31 @@ fun isValidIPv4(ipv:String):Boolean{
 
 
 
-fun testOperation(description: String, expectedResult: Boolean,actualResult:Boolean) {
+fun runTest(description: String, expectedResult: Boolean,actualResult:Boolean) {
     val testStatus = if (actualResult == expectedResult) "PASSED" else "FAILED"
-    val infoResutTest = "$description: $testStatus (Expected: $expectedResult, Got: $actualResult)";
+    val infoResutTest = "$description:(Expected: $expectedResult, Got: $actualResult) -  $testStatus ";
     println(infoResutTest);
 }
 
-fun IPvCheckerTest(){
-    val validIPv4 = "192.168.1.1";
-    val invalidLengthIPv4= "192.168.1.1.1";
-    val invalidNotDigitIPv4= "192.168.1.aa";
-    val invalidMissingIPv4= "192.168.1..1";
-    val invalidRangeIPv4= "265.168.1.1.1";
-    val invalidPrefixIPv4= "192.168.001.1";
-    testOperation("Valid IPv4", true, isValidIPv4(validIPv4))
-    testOperation("Invalid IPv4", false, isValidIPv4(invalidLengthIPv4))
-    testOperation("Not digit  IPv4", false, isValidIPv4(invalidNotDigitIPv4))
-    testOperation("Missing segment ", false, isValidIPv4(invalidMissingIPv4))
-    testOperation("Invalid range", false, isValidIPv4(invalidRangeIPv4))
-    testOperation("invalid Prefix IPv4", false, isValidIPv4(invalidPrefixIPv4))
+fun iPvCheckerTest(){
+    //valid
+    runTest("Valid - Broadcast IP:", true, isValidIPv4("255.255.255.255"))
+    runTest("Valid - Default IP:", true, isValidIPv4("0.0.0.0"))
+    runTest("Valid - localhost IP:", true, isValidIPv4("127.0.0.1"))
+    runTest("Valid - IP in the range:", true, isValidIPv4("8.8.8.8"))
+    runTest("Valid - DNS IP:", true, isValidIPv4("172.50.50.50"))
+
+    // Invalid IPs
+    runTest("Invalid - Empty String", false, isValidIPv4(""))
+    runTest("Invalid - Out of the range", false, isValidIPv4("192.0.2.256"))
+    runTest("Invalid - Forgetton Segment", false, isValidIPv4("192.80..0"))
+    runTest("Invalid - Invalid number of segments(too short)", false, isValidIPv4("192.50"))
+    runTest("Invalid - Invalid number of segments(too long)", false, isValidIPv4("192.50.50.50.50"))
+    runTest("Invalid - Negative segment", false, isValidIPv4("192.-50.50.50"))
+    runTest("Invalid - prefix zero segment", false, isValidIPv4("192.168.001.1"))
+    runTest("Invalid - Segment Has a whitespace ", false, isValidIPv4("192. 50.50"))
+    runTest("Invalid - Segment has character not valid", false, isValidIPv4("192.168.1.1$"))
 }
 fun main(){
-    IPvCheckerTest();
+    iPvCheckerTest();
 }

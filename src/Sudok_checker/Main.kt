@@ -2,9 +2,12 @@ package Sudok_checker
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+
+
+
 fun main() {
     fun isValidation(value:Char,r:Int,c:Int,board:Array<CharArray>):Boolean{
-      // Three validation
+        // Three validation
         // check the row
         for(j in 0 until 9){
             if(j!=c && board[r][j] == value){
