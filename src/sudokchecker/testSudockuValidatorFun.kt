@@ -1,4 +1,4 @@
-package Sudok_checker
+package sudokchecker
 
 class SudockuValidatorFun {
 
