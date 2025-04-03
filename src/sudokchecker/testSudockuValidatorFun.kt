@@ -1,5 +1,0 @@
-package sudokchecker
-
-class SudockuValidatorFun {
-
-}
