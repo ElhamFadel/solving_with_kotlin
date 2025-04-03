@@ -1,4 +1,4 @@
-package IPv4Checker
+package ipv4Checker
 
 
 fun isValidIPv4(ipv:String):Boolean{
