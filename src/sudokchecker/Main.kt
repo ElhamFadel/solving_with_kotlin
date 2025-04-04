@@ -91,8 +91,6 @@ val InvalidIncorrectSizeBoard =
 
 
 fun isValidation(value:Char,r:Int,c:Int,board:Array<CharArray>):Boolean{
-    // Three validation
-    // check the row
     for(j in 0 until 9){
         if(j!=c && board[r][j] == value){
             return false;

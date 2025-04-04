@@ -1,22 +1,14 @@
 package ipv4Checker
 
 
+
 fun isValidIPv4(ipv:String):Boolean{
-    // conditions for correct IPv4
-    if(ipv.isEmpty())return false
-    // 1- Having 3 dots, 4 digits
+    if(ipv.isEmpty()) return false
     val segments = ipv.split('.')
     if(segments.size !=4) return false
-    for (segment in segments ) {
-        if (segment.isEmpty()) return false
-        if (!segment.all { it.isDigit() }) return false
-        // Check if segment start with 0
-        if (segment.length > 1 && segment.startsWith("0")) return false
-        // Check numeric value
-        val num = segment.toInt()
-        if (num !in 0..255) return false
-    }
-    return true;
+//    '172.60.80.1'
+    return segments.all{subSegment-> subSegment.isNotEmpty() && subSegment.all { char-> char.isDigit() } && !(subSegment.length > 1 && subSegment.startsWith("0") )&&  subSegment.toInt() in 0..255}
+
 }
 
 
